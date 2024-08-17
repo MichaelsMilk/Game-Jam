@@ -7,11 +7,12 @@ const friction = 0.2
 @onready var camera = $Camera2D
 @onready var sprite = $AnimatedSprite2D
 
-const setSizes = [1,2,4]
-const setSpeeds = [1,1,1]
-const setJumps = [1,1.2,1.44]
+const setSizes = [0.5,1,2]
+const speedScaling = 0.3
+const cameraScaling = 0.5
+const jumpScaling = 0.3
 
-var sizeIndex = 0:
+var sizeIndex = 1:
 	set(value):
 		sizeIndex = clamp(value, 0, setSizes.size() - 1)
 
@@ -20,6 +21,8 @@ var gravity = 1000
 var size = setSizes[sizeIndex]
 
 var targetSize = size	
+var coyotteFrames = 0
+var jumpBufferFrames = 0
 
 
 func _physics_process(delta):
@@ -37,19 +40,27 @@ func _physics_process(delta):
 	if sizeChange != 1:
 		size = newSize
 		scale = Vector2.ONE * size
-		camera.zoom = Vector2.ONE * 2 / size
+		camera.zoom = Vector2.ONE * 2 / pow(size, cameraScaling)
 		velocity = Vector2.ZERO
 		
 	if sizeChange == 1:
 		if not is_on_floor():
-			velocity.y += gravity * delta * size
+			velocity.y += gravity * delta
 
-		# Handle jump.
-		if Input.is_action_just_pressed("jump") and is_on_floor():
-			velocity.y = JUMP_VELOCITY * size
-
+		if is_on_floor():
+			coyotteFrames = 6
+		if Input.is_action_just_pressed("jump"):
+			jumpBufferFrames = 8
+		if jumpBufferFrames > 0 and coyotteFrames > 0:
+			velocity.y = JUMP_VELOCITY * pow(size, jumpScaling)
+			coyotteFrames = 0
+			jumpBufferFrames = 0
+			
+		coyotteFrames -= 1
+		jumpBufferFrames -= 1
+		
 		var direction = Input.get_axis("left", "right")
-		velocity.x += direction * SPEED * size
+		velocity.x += direction * SPEED * pow(size, speedScaling)
 		
 		if direction != 0:
 			sprite.flip_h = direction == -1
