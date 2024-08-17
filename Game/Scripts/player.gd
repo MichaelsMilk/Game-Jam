@@ -1,8 +1,9 @@
 extends CharacterBody2D
 
 
-const SPEED = 250.0
+const SPEED = 40.0
 const JUMP_VELOCITY = -400.0
+const friction = 0.2
 @onready var camera = $Camera2D
 @onready var sprite = $AnimatedSprite2D
 
@@ -37,6 +38,7 @@ func _physics_process(delta):
 		size = newSize
 		scale = Vector2.ONE * size
 		camera.zoom = Vector2.ONE * 2 / size
+		velocity = Vector2.ZERO
 		
 	if sizeChange == 1:
 		if not is_on_floor():
@@ -47,9 +49,11 @@ func _physics_process(delta):
 			velocity.y = JUMP_VELOCITY * size
 
 		var direction = Input.get_axis("left", "right")
-		velocity.x = direction * SPEED * size
+		velocity.x += direction * SPEED * size
 		
 		if direction != 0:
 			sprite.flip_h = direction == -1
 
 		move_and_slide()
+		
+		velocity.x *= 1 - friction
