@@ -2,20 +2,23 @@ extends CharacterBody2D
 
 
 const SPEED = 250.0
-const JUMP_VELOCITY = -500.0
+const JUMP_VELOCITY = -400.0
 @onready var camera = $Camera2D
 @onready var sprite = $AnimatedSprite2D
 
-const setSizes = [0.04, 0.2, 1, 5, 25]
-var sizeIndex = 2:
+const setSizes = [1,2,4]
+const setSpeeds = [1,1,1]
+const setJumps = [1,1.2,1.44]
+
+var sizeIndex = 0:
 	set(value):
 		sizeIndex = clamp(value, 0, setSizes.size() - 1)
 
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = 1000
-var size = 1
+var size = setSizes[sizeIndex]
 
-var targetSize = 1	
+var targetSize = size	
 
 
 func _physics_process(delta):
@@ -27,7 +30,7 @@ func _physics_process(delta):
 			sizeIndex -= 1
 	
 	var targetSize = setSizes[sizeIndex]
-	var newSize = move_toward(size, targetSize, size * 0.05)
+	var newSize = move_toward(size, targetSize, size * 0.02)
 	var sizeChange = newSize / size
 	
 	if sizeChange != 1:
