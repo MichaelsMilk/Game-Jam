@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://bgnf8dtqgqgnr"]
+[gd_scene load_steps=14 format=3 uid="uid://bgnf8dtqgqgnr"]
 
 [ext_resource type="Script" path="res://Scripts/player.gd" id="1_bs5i4"]
 [ext_resource type="Texture2D" uid="uid://ck6v26rbhivng" path="res://Assets/player.png" id="2_ttg7w"]
@@ -70,6 +70,9 @@ animations = [{
 "speed": 5.0
 }]
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_a1u2n"]
+size = Vector2(16, 14)
+
 [node name="Player" type="CharacterBody2D"]
 z_index = 100
 script = ExtResource("1_bs5i4")
@@ -84,3 +87,8 @@ sprite_frames = SubResource("SpriteFrames_e80gc")
 animation = &"idle"
 autoplay = "idle"
 frame_progress = 0.0992312
+
+[node name="ShapeCast2D" type="ShapeCast2D" parent="."]
+position = Vector2(0, -7)
+shape = SubResource("RectangleShape2D_a1u2n")
+target_position = Vector2(0, -14)

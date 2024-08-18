@@ -52,3 +52,4 @@ grow={
 [rendering]
 
 textures/canvas_textures/default_texture_filter=0
+environment/defaults/default_clear_color=Color(0.0801773, 0.139075, 0.194816, 1)

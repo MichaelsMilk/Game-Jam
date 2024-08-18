@@ -7,6 +7,7 @@ const friction = 0.10
 const stopFriction = 0.3
 @onready var camera = $Camera2D
 @onready var sprite = $AnimatedSprite2D
+@onready var shape_cast_2d = $ShapeCast2D
 
 const setSizes = [0.5,1,2]
 const speedScaling = 0.0
@@ -30,7 +31,8 @@ func _physics_process(delta):
 	
 	if is_on_floor():
 		if Input.is_action_just_pressed("grow"):
-			sizeIndex += 1
+			if not shape_cast_2d.is_colliding():
+				sizeIndex += 1
 		if Input.is_action_just_pressed("shrink"):
 			sizeIndex -= 1
 	
