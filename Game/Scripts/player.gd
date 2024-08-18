@@ -69,6 +69,12 @@ func _physics_process(delta):
 			sprite.flip_h = direction == -1
 
 		move_and_slide()
+		for i in get_slide_collision_count():
+			var collision = get_slide_collision(i)
+			var collider = collision.get_collider()
+			if collider.is_in_group("Spike"):
+				get_tree().reload_current_scene()
+				return
 		
 		if direction == 0:
 			velocity.x *= 1 - stopFriction
@@ -77,3 +83,4 @@ func _physics_process(delta):
 		
 		if is_on_ceiling():
 			velocity.x = 0
+
