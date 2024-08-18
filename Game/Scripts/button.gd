@@ -23,7 +23,7 @@ func _on_area_2d_body_entered(body):
 	if body == player:
 		sprite.play("pushed")
 		press.emit()
-		pressed = not pressed
+		pressed = true
 		
 
 func _on_area_2d_body_exited(body):

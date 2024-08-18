@@ -34,13 +34,13 @@ animations = [{
 size = Vector2(16, 4)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_o30om"]
-size = Vector2(12, 3)
+size = Vector2(29, 8)
 
 [node name="Button" type="StaticBody2D"]
 script = ExtResource("1_5uagy")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-position = Vector2(0, -12)
+position = Vector2(-1, -7)
 sprite_frames = SubResource("SpriteFrames_kya54")
 animation = &"pushed"
 autoplay = "rest"
@@ -53,7 +53,7 @@ disabled = true
 [node name="Area2D" type="Area2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
-position = Vector2(0, -5.5)
+position = Vector2(-0.5, -4)
 shape = SubResource("RectangleShape2D_o30om")
 
 [connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]

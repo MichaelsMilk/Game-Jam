@@ -1,16 +1,17 @@
 extends CharacterBody2D
 
 
-const SPEED = 40.0
-const JUMP_VELOCITY = -400.0
-const friction = 0.2
+const SPEED = 20.0
+const JUMP_VELOCITY = -380.0
+const friction = 0.10
+const stopFriction = 0.3
 @onready var camera = $Camera2D
 @onready var sprite = $AnimatedSprite2D
 
 const setSizes = [0.5,1,2]
-const speedScaling = 0.3
+const speedScaling = 0.0
 const cameraScaling = 0.5
-const jumpScaling = 0.3
+const jumpScaling = 0.5
 
 var sizeIndex = 1:
 	set(value):
@@ -67,4 +68,10 @@ func _physics_process(delta):
 
 		move_and_slide()
 		
-		velocity.x *= 1 - friction
+		if direction == 0:
+			velocity.x *= 1 - stopFriction
+		else:
+			velocity.x *= 1 - friction
+		
+		if is_on_ceiling():
+			velocity.x = 0
