@@ -4,3 +4,4 @@
 
 [node name="GameManager" type="Node"]
 script = ExtResource("1_d8wcm")
+metadata/Energy = 0

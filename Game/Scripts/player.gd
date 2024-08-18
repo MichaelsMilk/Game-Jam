@@ -78,8 +78,10 @@ func _physics_process(delta):
 		
 		if direction == 0:
 			velocity.x *= 1 - stopFriction
+			sprite.play("idle")
 		else:
 			velocity.x *= 1 - friction
+			sprite.play("walk")
 		
 		if is_on_ceiling():
 			velocity.x = 0
