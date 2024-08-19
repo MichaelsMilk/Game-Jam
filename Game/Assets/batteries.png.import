@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bo6uwdai8dt20"
-path="res://.godot/imported/buttons.png-0147f1aa9ec3a55c3e5b6f9b98d78d04.ctex"
+uid="uid://drh0vwlunl8n2"
+path="res://.godot/imported/batteries.png-2f3a40a1b1405ebba45adbf64a572ad0.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Scenes/buttons.png"
-dest_files=["res://.godot/imported/buttons.png-0147f1aa9ec3a55c3e5b6f9b98d78d04.ctex"]
+source_file="res://Assets/batteries.png"
+dest_files=["res://.godot/imported/batteries.png-2f3a40a1b1405ebba45adbf64a572ad0.ctex"]
 
 [params]
 

@@ -40,7 +40,7 @@ size = Vector2(29, 8)
 script = ExtResource("1_5uagy")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-position = Vector2(-1, -7)
+position = Vector2(-1, -9)
 sprite_frames = SubResource("SpriteFrames_kya54")
 animation = &"pushed"
 autoplay = "rest"

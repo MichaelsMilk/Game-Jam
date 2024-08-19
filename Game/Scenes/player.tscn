@@ -4,7 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://cfhg2nlsp350b" path="res://Assets/player2.png" id="2_0h3xa"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_q0wuv"]
-size = Vector2(16, 13)
+size = Vector2(16, 18)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_8ggcb"]
 atlas = ExtResource("2_0h3xa")
@@ -118,15 +118,17 @@ animations = [{
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_a1u2n"]
-size = Vector2(16, 14)
+size = Vector2(16, 19)
 
 [node name="Player" type="CharacterBody2D" groups=["Player"]]
 z_index = 100
 collision_mask = 3
 script = ExtResource("1_bs5i4")
+metadata/StartingEnergy = 0
+metadata/StartingSize = 1
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, -6.5)
+position = Vector2(0, -9)
 shape = SubResource("RectangleShape2D_q0wuv")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
@@ -137,7 +139,7 @@ autoplay = "idle"
 frame_progress = 0.978377
 
 [node name="ShapeCast2D" type="ShapeCast2D" parent="."]
-position = Vector2(0, -20)
+position = Vector2(0, -29)
 shape = SubResource("RectangleShape2D_a1u2n")
 target_position = Vector2(0, 0)
 

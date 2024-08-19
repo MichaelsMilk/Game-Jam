@@ -9,8 +9,7 @@ const stopFriction = 0.3
 @onready var camera = $Camera2D
 @onready var sprite = $AnimatedSprite2D
 @onready var shape_cast_2d = $ShapeCast2D
-@onready var game_manager = %GameManager
-@onready var energy:int = game_manager.get_meta("Energy")
+@onready var energy:int = get_meta("StartingEnergy")
 
 
 const setSizes = [0.5,1,2]
@@ -18,22 +17,28 @@ const speedScaling = 0.0
 const cameraScaling = 0.5
 const jumpScaling = 0.5
 
-var sizeIndex = 1:
+@onready var sizeIndex:int = get_meta("StartingSize"):
 	set(value):
 		sizeIndex = clamp(value, 0, setSizes.size() - 1)
 
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = 1000
-var size = setSizes[sizeIndex]
+@onready var size = setSizes[sizeIndex]
 
-var targetSize = size	
+@onready var targetSize = size	
 var coyotteFrames = 0
 var jumpBufferFrames = 0
+var changingSize = false
+
+func _ready():
+	scale = Vector2.ONE * size
+	camera.zoom = Vector2.ONE * 2 / pow(size, cameraScaling)
 
 
 func _physics_process(delta):
+	var direction = Input.get_axis("left", "right")
 	
-	if is_on_floor() and energy > 0:
+	if is_on_floor() and energy > 0 and not changingSize:
 		if Input.is_action_just_pressed("grow") and sizeIndex < setSizes.size() - 1:
 			if not shape_cast_2d.is_colliding():
 				sizeIndex += 1
@@ -45,14 +50,15 @@ func _physics_process(delta):
 	var targetSize = setSizes[sizeIndex]
 	var newSize = move_toward(size, targetSize, size * 0.02)
 	var sizeChange = newSize / size
+	changingSize = sizeChange != 1
 	
-	if sizeChange != 1:
+	if changingSize:
 		size = newSize
 		scale = Vector2.ONE * size
 		camera.zoom = Vector2.ONE * 2 / pow(size, cameraScaling)
 		velocity = Vector2.ZERO
 		
-	if sizeChange == 1:
+	if not changingSize:
 		if not is_on_floor():
 			velocity.y += gravity * delta
 
@@ -68,7 +74,6 @@ func _physics_process(delta):
 		coyotteFrames -= 1
 		jumpBufferFrames -= 1
 		
-		var direction = Input.get_axis("left", "right")
 		velocity.x += direction * SPEED * pow(size, speedScaling)
 		
 		if direction != 0:
@@ -82,13 +87,12 @@ func _physics_process(delta):
 				get_tree().reload_current_scene()
 				return
 		
-		if direction == 0:
-			velocity.x *= 1 - stopFriction
-			sprite.play("idle")
-		else:
-			velocity.x *= 1 - friction
-			sprite.play("walk")
-		
-		if is_on_ceiling():
+		if is_on_ceiling() and size > 0.5:
 			velocity.x = 0
 
+	if direction == 0 or changingSize:
+		velocity.x *= 1 - stopFriction
+		sprite.play("idle")
+	else:
+		velocity.x *= 1 - friction
+		sprite.play("walk")
