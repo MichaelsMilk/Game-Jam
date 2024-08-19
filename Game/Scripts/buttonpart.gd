@@ -3,15 +3,14 @@ extends StaticBody2D
 @onready var button = get_node(get_meta("button"))
 @onready var sprite = $Sprite2D
 @onready var collision_shape_2d = $CollisionShape2D
+@onready var initPos = position 
+@onready var targetPos = position + Vector2(0, -48)
 
+var active = false
 
 
 func _physics_process(delta):
 	if button.pressed:
-		sprite.modulate.a = 0.5
-		collision_shape_2d.disabled = true
-	else:
-		sprite.modulate.a = 1
-		collision_shape_2d.disabled = false
+		position.y = move_toward(position.y, targetPos.y, 0.2)
 	
 

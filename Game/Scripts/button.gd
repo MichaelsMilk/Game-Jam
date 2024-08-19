@@ -20,14 +20,11 @@ func _process(delta):
 
 
 func _on_area_2d_body_entered(body):
-	if body == player:
+	if body.is_in_group("Player"):
 		sprite.play("pushed")
 		press.emit()
 		pressed = true
 		
 
 func _on_area_2d_body_exited(body):
-	if body == player:
-		sprite.play("rest")
-		unpress.emit()
-		#pressed = false
+	pass

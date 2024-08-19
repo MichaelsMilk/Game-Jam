@@ -5,9 +5,13 @@ const SPEED = 20.0
 const JUMP_VELOCITY = -380.0
 const friction = 0.10
 const stopFriction = 0.3
+
 @onready var camera = $Camera2D
 @onready var sprite = $AnimatedSprite2D
 @onready var shape_cast_2d = $ShapeCast2D
+@onready var game_manager = %GameManager
+@onready var energy:int = game_manager.get_meta("Energy")
+
 
 const setSizes = [0.5,1,2]
 const speedScaling = 0.0
@@ -29,12 +33,14 @@ var jumpBufferFrames = 0
 
 func _physics_process(delta):
 	
-	if is_on_floor():
-		if Input.is_action_just_pressed("grow"):
+	if is_on_floor() and energy > 0:
+		if Input.is_action_just_pressed("grow") and sizeIndex < setSizes.size() - 1:
 			if not shape_cast_2d.is_colliding():
 				sizeIndex += 1
-		if Input.is_action_just_pressed("shrink"):
+				energy -= 1
+		if Input.is_action_just_pressed("shrink") and sizeIndex > 0:
 			sizeIndex -= 1
+			energy -= 1
 	
 	var targetSize = setSizes[sizeIndex]
 	var newSize = move_toward(size, targetSize, size * 0.02)
