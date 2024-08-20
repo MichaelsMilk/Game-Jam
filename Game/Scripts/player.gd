@@ -10,6 +10,7 @@ const stopFriction = 0.3
 @onready var sprite = $AnimatedSprite2D
 @onready var shape_cast_2d = $ShapeCast2D
 @onready var energy:int = get_meta("StartingEnergy")
+@onready var infinite = get_meta("InfiniteSize")
 
 
 @onready var setSizes = get_meta("SetSizes")
@@ -20,6 +21,8 @@ const jumpScaling = 0.5
 @onready var sizeIndex:int = get_meta("StartingSize"):
 	set(value):
 		sizeIndex = clamp(value, 0, setSizes.size() - 1)
+		if infinite:
+			sizeIndex = value
 
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = 1000
@@ -46,7 +49,13 @@ func _physics_process(delta):
 		
 	var direction = Input.get_axis("left", "right")
 	
-	if is_on_floor() and energy > 0 and not changingSize:
+	if infinite:
+		if	Input.is_action_just_pressed("grow"):
+			sizeIndex += 1
+		if Input.is_action_just_pressed("shrink"):
+			sizeIndex -= 1
+			
+	elif is_on_floor() and energy > 0 and not changingSize:
 		if Input.is_action_just_pressed("grow") and sizeIndex < setSizes.size() - 1:
 			if not shape_cast_2d.is_colliding():
 				sizeIndex += 1
@@ -55,7 +64,11 @@ func _physics_process(delta):
 			sizeIndex -= 1
 			energy -= 1
 	
-	var targetSize = setSizes[sizeIndex]
+	var targetSize
+	if infinite:
+		targetSize = pow(2, sizeIndex)
+	else:
+		targetSize = setSizes[sizeIndex]
 	var newSize = move_toward(size, targetSize, size * 0.02)
 	var sizeChange = newSize / size
 	changingSize = sizeChange != 1

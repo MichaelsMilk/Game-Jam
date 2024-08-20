@@ -15,7 +15,9 @@ func _ready():
 
 
 func _physics_process(delta):
-	if button.pressed:
+	if button == null:
+		print(name)
+	elif button.pressed:
 		position.y = move_toward(position.y, targetPos.y, 16 * delta)
 		z_index = -200
 	

@@ -348,6 +348,7 @@ script = ExtResource("1_bs5i4")
 metadata/StartingEnergy = 0
 metadata/StartingSize = 1
 metadata/SetSizes = PackedFloat32Array(0.5, 1, 2)
+metadata/InfiniteSize = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, -9)

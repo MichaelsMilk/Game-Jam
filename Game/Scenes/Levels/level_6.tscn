@@ -30,7 +30,7 @@ layer_1/tile_data = PackedInt32Array(131082, 196611, 3, 65546, 196611, 3, 10, 19
 
 [node name="NextLevel" parent="." instance=ExtResource("5_crhvt")]
 position = Vector2(776, -88)
-metadata/ScenePath = "res://Scenes/Levels/level_7.tscn"
+metadata/ScenePath = "res://Scenes/Levels/level_8.tscn"
 
 [node name="SpikeTilemap" parent="." instance=ExtResource("6_dleyi")]
 layer_0/tile_data = PackedInt32Array(131086, 524288, 7, 65550, 524288, 6, 131085, 458752, 7, 65549, 458752, 6, 131084, 458752, 7, 65548, 458752, 6, 131083, 393216, 7, 65547, 393216, 6, 131096, 524288, 7, 65560, 524288, 6, 131095, 458752, 7, 65559, 458752, 6, 131094, 458752, 7, 65558, 458752, 6, 131093, 393216, 7, 65557, 393216, 6)
