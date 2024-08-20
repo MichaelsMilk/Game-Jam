@@ -12,7 +12,7 @@ const stopFriction = 0.3
 @onready var energy:int = get_meta("StartingEnergy")
 
 
-const setSizes = [0.5,1,2]
+@onready var setSizes = get_meta("SetSizes")
 const speedScaling = 0.0
 const cameraScaling = 0.5
 const jumpScaling = 0.5
@@ -30,12 +30,20 @@ var coyotteFrames = 0
 var jumpBufferFrames = 0
 var changingSize = false
 
+var freezeTime = 0
+
 func _ready():
 	scale = Vector2.ONE * size
 	camera.zoom = Vector2.ONE * 2 / pow(size, cameraScaling)
+	sprite.play("enter")
+	freezeTime = 0.65
 
 
 func _physics_process(delta):
+	if freezeTime > 0: 
+		freezeTime -= delta
+		return
+		
 	var direction = Input.get_axis("left", "right")
 	
 	if is_on_floor() and energy > 0 and not changingSize:
@@ -87,7 +95,7 @@ func _physics_process(delta):
 				get_tree().reload_current_scene()
 				return
 		
-		if is_on_ceiling() and size > 0.5:
+		if is_on_ceiling():
 			velocity.x = 0
 
 	if direction == 0 or changingSize:
@@ -96,3 +104,7 @@ func _physics_process(delta):
 	else:
 		velocity.x *= 1 - friction
 		sprite.play("walk")
+		
+func exit():
+	freezeTime = 1
+	sprite.play("exit")

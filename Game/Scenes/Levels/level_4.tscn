@@ -47,8 +47,9 @@ position = Vector2(-120, 0)
 metadata/button = NodePath("../Button4")
 
 [node name="EnergyGiver" parent="." instance=ExtResource("7_h5gpk")]
-position = Vector2(-16, -24)
+position = Vector2(0, -16)
 metadata/Energy = 3
 
 [node name="NextLevel" parent="." instance=ExtResource("8_tskfr")]
 position = Vector2(-176, -8)
+metadata/ScenePath = "res://Scenes/Levels/level_5.tscn"

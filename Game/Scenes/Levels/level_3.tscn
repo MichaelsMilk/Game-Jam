@@ -28,7 +28,7 @@ position = Vector2(224, -72)
 metadata/ScenePath = "res://Scenes/Levels/level_4.tscn"
 
 [node name="EnergyGiver" parent="." instance=ExtResource("6_ji7tm")]
-position = Vector2(56, -152)
+position = Vector2(72, -144)
 metadata/Energy = 3
 
 [node name="Label" parent="." instance=ExtResource("7_kv0gm")]
